@@ -1,4 +1,3 @@
-import 'dart:js_interop';
 import 'dart:math';
 
 import 'package:anilist_movie_flutter/data/models/movie.dart';
@@ -17,14 +16,16 @@ class AnimeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tempSeasonYear = anime.seasonYear.toString();
+    var tempEpisodes = anime.episodes.toString();
     List<InfoSeason> infoSeason = List<InfoSeason>.from([
       InfoSeason(value: anime.season, type: 'season'),
       InfoSeason(
-          value: anime.seasonYear.isNull ? null : anime.seasonYear.toString(),
+          value: tempSeasonYear == 'null' ? null : tempSeasonYear,
           type: 'seasonYear'),
       InfoSeason(value: anime.status, type: 'status'),
       InfoSeason(
-          value: anime.episodes.isNull ? null : anime.episodes.toString(),
+          value: tempEpisodes == 'null' ? null : tempEpisodes,
           type: 'episodes'),
     ]);
     infoSeason = infoSeason.where((element) => element.value != null).toList();
