@@ -132,3 +132,10 @@ class ListGenre {
     );
   }
 }
+
+class InfoSeason {
+  final String? value;
+  final String type;
+
+  InfoSeason({required this.value, required this.type});
+}

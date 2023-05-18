@@ -1,3 +1,4 @@
+import 'dart:js_interop';
 import 'dart:math';
 
 import 'package:anilist_movie_flutter/data/models/movie.dart';
@@ -16,6 +17,17 @@ class AnimeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<InfoSeason> infoSeason = List<InfoSeason>.from([
+      InfoSeason(value: anime.season, type: 'season'),
+      InfoSeason(
+          value: anime.seasonYear.isNull ? null : anime.seasonYear.toString(),
+          type: 'seasonYear'),
+      InfoSeason(value: anime.status, type: 'status'),
+      InfoSeason(
+          value: anime.episodes.isNull ? null : anime.episodes.toString(),
+          type: 'episodes'),
+    ]);
+    infoSeason = infoSeason.where((element) => element.value != null).toList();
     return Container(
       color: const Color(0xff757575),
       child: Container(
@@ -58,43 +70,22 @@ class AnimeDetail extends StatelessWidget {
                 height: 10.0,
               ),
             ],
-            if (anime.season != null &&
-                anime.seasonYear != null &&
-                anime.status != null &&
-                anime.episodes != null) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "${anime.season!}-",
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  Text(
-                    "${anime.seasonYear!}-",
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  Text(
-                    "${anime.status!}-",
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    "${anime.episodes ?? 0} episodes",
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ],
+            if (infoSeason.isNotEmpty) ...[
+              Center(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var i = 0; i < infoSeason.length; i++) ...[
+                      Text(
+                        "${i != 0 ? "--" : ""}${infoSeason[i].value}${infoSeason[i].type == 'episodes' ? ' episodes' : ''}",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w700,
+                          color: randomOpaqueColor(),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 10.0,
@@ -109,10 +100,10 @@ class AnimeDetail extends StatelessWidget {
                       Text(
                         '${i != 0 ? "," : ""}${anime.genres![i]}',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15.0,
+                          color: Colors.black87,
                           fontWeight: FontWeight.w700,
-                          color: randomOpaqueColor(),
                         ),
                       )
                     ]
