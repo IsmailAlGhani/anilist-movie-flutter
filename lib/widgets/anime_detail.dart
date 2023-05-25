@@ -116,10 +116,8 @@ class AnimeDetail extends StatelessWidget {
               ),
             ],
             if (anime.description != null) ...[
-              SingleChildScrollView(
-                child: Html(
-                  data: anime.description!,
-                ),
+              Html(
+                data: anime.description!,
               ),
             ],
           ],
