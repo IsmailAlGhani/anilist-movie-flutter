@@ -79,6 +79,7 @@ class _MyAppState extends State<MyApp> {
       child: GraphQLProvider(
         client: clientNotifier,
         child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           routerConfig: _router,
         ),
       ),
